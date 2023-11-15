@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://unpkg.com/htmx.org@1.9.3"
+      integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua"
+      crossorigin="anonymous"
+    ></script>
+    <title>Login</title>
+    <link href="{{url_for('static',path='/css/app.css')}}" rel="stylesheet" />
+  </head>
+  <body>
+    <header
+      class="bg-indigo-700 z-10 absolute text-white text-2xl p-3 w-screen"
+    >
+      header
+    </header>
+    <div class="flex flex-col items-center">
+      <form
+        action="/login"
+        method="POST"
+        class="border rounded border-blue-600 p-5 m-10 flex flex-col items-center shadow-2xl w-96"
+      >
+        <h1 class="text-2xl font-semibold mb-5">User login</h1>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          class="border rounded border-violet-600 my-2 p-2 w-full"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          class="border rounded border-violet-700 my-2 p-2 w-full"
+          required
+        />
+        <p id="error"></p>
+        <input
+          type="submit"
+          class="bg-indigo-700 text-white rounded my-5 p-2 px-10 cursor-pointer"
+        />
+      </form>
+    </div>
+  </body>
+</html>

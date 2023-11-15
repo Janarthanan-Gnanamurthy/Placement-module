@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{url_for('static',path='/css/app.css')}}" rel="stylesheet">
+    <title>Scores</title>
+</head>
+<body>
+    <div class="w-full mx-auto bg-white rounded-md shadow-md p-6">
+        <h1 class="text-center mb-10 text-2xl font-bold ">Scores</h1>
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Topic</th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through your data and create a row for each entry -->
+                {% for result in results %}
+                <tr class="my-3 hover:bg-gray-200 hover:cursor-pointer" >
+                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">{{result.course_name}}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">{{result.topic_name}}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500">{{result.score}}</td>
+                </tr>
+                {% endfor %}
+                <!-- Repeat this row structure for each data entry -->
+            </tbody>
+        </table>
+    
+    </div>
+</body>
+</html>

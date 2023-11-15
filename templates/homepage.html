@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{{url_for('static',path='/css/app.css')}}" rel="stylesheet" />
+    <script
+      src="https://unpkg.com/htmx.org@1.9.3"
+      integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Home Page</title>
+  </head>
+  <body>
+    <header
+      class="bg-indigo-700 z-10 absolute text-white text-2xl p-3 w-screen"
+    >
+      header
+    </header>
+    <div class="flex z-0 absolute top-0">
+      <div
+        class="text-2xl bg-blue-600 text-white w-96 h-screen border-r-2 border-blue-600"
+      >
+        <div
+          class="hover:bg-white p-2 mt-16 rounded"
+          hx-get="/home/{{user_id}}"
+          hx-trigger="click"
+          hx-swap="outerHTML"
+          hx-target="#mainbody"
+        >
+          Course
+        </div>
+        <div
+          class="hover:bg-white hover:cursor-pointer border-white bg-blue-600 p-2 text-white cursor-pointer hover:text-black ease-in-out rounded"
+        >
+          Dashboard
+        </div>
+        <div
+          class="hover:bg-white bg-blue-600 p-2 text-white cursor-pointer hover:text-black ease-in-out rounded"
+          hx-get="/home/{{user_id}}/scores"
+          hx-trigger="click"
+          hx-swap="outerHTML"
+          hx-target="#mainbody"
+        >
+          Scores
+        </div>
+      </div>
+      <div class="p-10 mt-20" id="mainbody">
+        <h1 class="text-3xl font-semibold w-full mb-3">Courses</h1>
+        <hr class="bg-slate-800" />
+        <br />
+        <div class="flex flex-wrap">
+          {% for c in Courses %}
+          <div
+            class="border-2 border-blue-600 rounded m-2 p-2 w-60 h-40 cursor-pointer hover:opacity-75"
+            onclick="window.location.href='/user/course/{{c.id}}'"
+          >
+            {{c.name}}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+  </head>
+  <body>
+    <form method="POST" action="/test">
+      <label for="dept">Department</label><br />
+      <input type="text" name="dept_name" /><br />
+      <input type="submit" value="Submit"/>
+    </form>
+    {% for dept in depts %}
+        <p>{{dept.name}}</p>
+    {% endfor %}
+  </body>
+</html>

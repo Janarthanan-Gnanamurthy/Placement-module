@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{{url_for('static',path='/css/app.css')}}" rel="stylesheet" />
+    <script
+      src="https://unpkg.com/htmx.org@1.9.3"
+      integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua"
+      crossorigin="anonymous"
+    ></script>
+    <title>{{course.name}}</title>
+  </head>
+  <body class="h-screen">
+    <header class="bg-indigo-700 text-white text-2xl p-3">header</header>
+    <div
+      class="w-full border-b-2 border-blue-600 bg-indigo-800 text-2xl text-white p-2"
+    >
+      {{course.name}}
+    </div>
+    <div class="flex" style="min-height: 85.5%">
+      <div
+        class="hidden md:block text-2xl min-w-max border-r-2 border-blue-600"
+        id="sidebar"
+      >
+        <div
+          class="border-b border-blue-600 p-2"
+          hx-get="/user/course/topic/1"
+          hx-trigger="click"
+          hx-swap="innerHTML"
+          hx-target="#mainbody"
+        >
+          Introduction
+        </div>
+        {% for topic in topics %}
+        <div
+          class="border-b border-white bg-blue-600 p-2 text-white cursor-pointer hover:opacity-75"
+          id="{{topic.id}}"
+          onclick="mydropdown('{{topic.id}}')"
+        >
+          {{topic.name}}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="p-1 text-xl w-full" id="mainbody">{{course.intro}}</div>
+    </div>
+    <script>
+      let addedElement = null;
+      let prevElementBtn = null;
+      function mydropdown(x) {
+        let container = document.getElementById("sidebar");
+        let addElementBtn = document.getElementById(x);
+
+        if (addedElement) {
+          container.removeChild(addedElement);
+        }
+
+        if (prevElementBtn) {
+          prevElementBtn.classList.add("hover:opacity-75", "cursor-pointer");
+        }
+        addElementBtn.classList.remove("hover:opacity-75", "cursor-pointer");
+
+        let newElement = document.createElement("div");
+        newElement.textContent = "Test-I"; // Jinja2 template variable
+        newElement.classList.add(
+          "bg-white",
+          "p-2",
+          "border-b-2",
+          "cursor-pointer"
+        ); // Tailwind CSS classes
+        addElementBtn.insertAdjacentElement("afterend", newElement);
+        newElement.setAttribute(
+          "hx-get",
+          `/user/course/topic/${x}/{{course.id}}`
+        );
+        newElement.setAttribute("hx-trigger", "click");
+        newElement.setAttribute("hx-swap", "outerHTML");
+        newElement.setAttribute("hx-target", "#mainbody");
+
+        htmx.process(newElement);
+        addedElement = newElement;
+        prevElementBtn = addElementBtn;
+      }
+
+      /*async function updateElement(id) {
+        try {
+          const response = await fetch(`/user/course/topic/${id}`);
+          const datalist = await response.json();
+          let elementToUpdate=document.getElementById('mainbody');
+
+          elementToUpdate.innerHTML= datalist[0].content;
+        } catch(error) {
+            alert(`An error Occurred: ${error}`)
+          }
+      }*/
+    </script>
+  </body>
+</html>

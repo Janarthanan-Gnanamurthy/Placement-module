@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{{url_for('static',path='/css/app.css')}}" rel="stylesheet" />
+    <title>Result</title>
+  </head>
+  <body>
+    <div
+      class="p-5 w-full h-full border border-blue-600 flex flex-col items-center overflow-y-auto"
+      id="mainbody"
+    >
+      <h1 class="text-3xl font-semibold text-center p-4">Result</h1>
+      <div class="w-2/3 mb-20">
+        <div class="bg-blue-200 h-6 rounded-full flex font-bold">
+          <div
+            class="bg-blue-600 h-6 rounded-full"
+            style="width: {{score}}%; min-width: 24px;"
+          ></div>
+          <p class="ps-2">{{score}}%</p>
+        </div>
+      </div>
+      {% for question in questions %} {% if result[question.id] == "Correct" %}
+      <div class="bg-green-500 text-xl text-white rounded-t-md w-full">
+        <p class="p-1">Question No: {{question.id}}</p>
+        <div
+          class="text-xl text-black border-2 border-green-600 border-b-0 p-2 w-full rounded-t-md bg-white"
+        >
+          <p class="mb-3">{{question.content}}</p>
+          {% if question.pic %}
+          <img
+            src="/static/image/{{question.pic}}"
+            alt="Question {{question.id}}"
+            width="500"
+            class="p-3 mx-auto"
+          />
+          {% endif %}
+        </div>
+      </div>
+      <div
+        class="flex flex-col text-xl border-2 border-green-600 rounded-b-md p-2 w-full"
+      >
+        {% for option in question.options %} {% if option ==
+        form_data[question.id|string] %}
+        <label class="items-center mb-0.5">
+          <input
+            type="radio"
+            name="{{question.id}}"
+            class="form-radio"
+            value="{{option}}"
+            checked
+            disabled
+          />
+          <span class="ml-2">{{option}}</span>
+        </label>
+        {% else %}
+        <label class="items-center mb-0.5">
+          <input
+            type="radio"
+            name="{{question.id}}"
+            class="form-radio"
+            value="{{option}}"
+            disabled
+          />
+          <span class="ml-2">{{option}}</span>
+        </label>
+        {% endif %} {% endfor %}
+      </div>
+      <div class="bg-green-500 text-xl text-white rounded-md w-full">
+        <p class="p-1">Explanation :</p>
+        <div
+          class="text-xl text-black border-2 border-green-600 border-t-0 p-2 w-full rounded-md bg-white"
+        >
+          {{question.explanation}}
+        </div>
+      </div>
+      <br />
+
+      <br />
+      {% else %}
+      <div class="bg-red-400 text-white text-xl rounded-t-md w-full">
+        <p class="p-1">Question No: {{question.id}}</p>
+        <div
+          class="text-xl text-black border-2 border-red-600 border-b-0 p-2 w-full rounded-t-md bg-white"
+        >
+          <p class="mb-3">{{question.content}}</p>
+          {% if question.pic %}
+          <img
+            src="/static/image/{{question.pic}}"
+            alt="Question {{question.id}}"
+            width="500"
+            class="p-3 mx-auto"
+          />
+          {% endif %}
+        </div>
+      </div>
+      <div
+        class="flex flex-col text-xl border-2 border-red-600 p-2 rounded-b-md w-full"
+      >
+        {% for option in question.options %} {% if option ==
+        form_data[question.id|string] %}
+        <label class="items-center mb-0.5">
+          <input
+            type="radio"
+            name="{{question.id}}"
+            class="form-radio"
+            value="{{option}}"
+            checked
+            disabled
+          />
+          <span class="ml-2">{{option}}</span>
+        </label>
+        {% else %}
+        <label class="items-center mb-0.5">
+          <input
+            type="radio"
+            name="{{question.id}}"
+            class="form-radio"
+            value="{{option}}"
+            disabled
+          />
+          <span class="ml-2">{{option}}</span>
+        </label>
+        {% endif %} {% endfor %}
+      </div>
+      <div class="bg-red-400 text-xl text-white rounded-md w-full">
+        <p class="p-1">Correct Answer:</p>
+        <div
+          class="text-xl text-black border-2 border-red-600 border-t-0 p-2 w-full rounded-md bg-white"
+        >
+          {{question.answer}}
+        </div>
+      </div>
+      <div class="bg-red-400 text-xl text-white rounded-md w-full">
+        <p class="p-1">Explanation :</p>
+        <div
+          class="text-xl text-black border-2 border-red-600 border-t-0 p-2 w-full rounded-md bg-white"
+        >
+          {{question.explanation}}
+        </div>
+      </div>
+      <br />
+      {% endif %} {% endfor %}
+    </div>
+    <script defer></script>
+  </body>
+</html>
